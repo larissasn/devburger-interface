@@ -1,5 +1,6 @@
 // eslint-disable-next-line import-helpers/order-imports
 import { createGlobalStyle } from 'styled-components';
+import 'react-toastify/dist/ReactToastify.css';
 
 const globalStyles = createGlobalStyle`
   *{
