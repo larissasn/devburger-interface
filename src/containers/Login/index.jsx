@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { api } from '../../services/api';
 import Logo from '../../assets/logo.svg';
 import { Button } from '../../components/Button';
 import {
@@ -15,8 +16,14 @@ import {
 export function Login() {
   const schema = yup
     .object({
-      email: yup.string().email('Digite um e-mail válido').required('O email é obrigatório'),
-      password: yup.string().min(6, 'A senha deve ter pelo menos 6 caracteres').required('Digite uma senha'),
+      email: yup
+        .string()
+        .email('Digite um e-mail válido')
+        .required('O email é obrigatório'),
+      password: yup
+        .string()
+        .min(6, 'A senha deve ter pelo menos 6 caracteres')
+        .required('Digite uma senha'),
     })
     .required();
 
@@ -28,8 +35,15 @@ export function Login() {
     resolver: yupResolver(schema),
   });
 
-  console.log(errors)
-  const onSubmit = (data) => console.log(data);
+  console.log(errors);
+  const onSubmit = async (data) => {
+    const response = await api.post('/session', {
+      email: data.email,
+      password: data.password,
+    });
+
+    console.log("response:", response)
+  };
 
   return (
     <Container>
